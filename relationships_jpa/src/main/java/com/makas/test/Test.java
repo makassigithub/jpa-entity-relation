@@ -1,13 +1,13 @@
 package com.makas.test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 import com.makas.relationships_jpa.Car;
 import com.makas.relationships_jpa.Person;
 import com.makas.service.CarService;
-
 public class Test {
      public static void main(String...args){
     	 
@@ -37,9 +37,30 @@ public class Test {
 	                      plist.add(p2);
 	      // add the list to the car 
 	            c1.setPersons(plist);
+	       //Synchronize 
+	            List<Car> carList = new ArrayList<Car>();
+	                      carList.add(c1);
+	                      p1.setCars(carList);
+	                      p2.setCars(carList);
+	            
 	            cs.createCar(c1);	       	    
 	       	    Car c = cs.getCar(c1);
 	       	    System.out.println(c.toString());
+	       	           	    
+	       // create a new person and add him to the car and add the car to him
+	       	    Person p3 = new Person("Da","Komolo",new Date());
+	       	    cs.addPersonToCar(cs.getCar(c1), p3);
+	       	    p3.setCars(carList);
+	       	    
+	       //get the Car from the DB and print it
+	       	    Car cr = cs.getCar(c1);
+	       	    System.out.println(cr);
+	       	    
+	       	//verify that persons car is persisted;
+	       	    for(Person p : cr.getPersons()){
+	       	    	
+	       	    	System.out.println(p.getPersonId()+ " : "+  p.getCars());
+	       	    }
      }
     		 
     		 

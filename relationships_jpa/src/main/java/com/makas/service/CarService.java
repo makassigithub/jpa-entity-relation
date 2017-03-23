@@ -19,10 +19,10 @@ public class CarService {
 		tx.begin();
 		em.persist(car);
 
-		// Without @Cascade annotation on the entities, we would have hard coded Person's persistence.
+		/* Without @Cascade annotation on the entities, we would have hard coded Person's persistence.
 		for (Person p : car.getPersons()) {
 			em.persist(p);
-		}
+		} */
 		em.flush();// optional
 		tx.commit();
 		return car;
@@ -40,6 +40,14 @@ public class CarService {
 		List<Person> ps = car.getPersons();
 
 		return ps;
+	}
+	
+	public void addPersonToCar(Car c, Person p){
+		//get associated persons to the car and add p
+		tx.begin();
+		c.getPersons().add(p);
+		em.persist(c);
+		tx.commit();
 	}
 
 }
