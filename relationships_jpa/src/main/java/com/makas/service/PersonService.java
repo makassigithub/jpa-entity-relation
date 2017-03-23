@@ -15,6 +15,8 @@ public class PersonService {
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("relation_unit");
 	private EntityManager em = emf.createEntityManager();
 	private EntityTransaction tx = em.getTransaction();
+	
+	
 
 	public Person createCar(Person p) {
 		tx.begin();
@@ -22,14 +24,13 @@ public class PersonService {
 		tx.commit();
 		return p;
 	}
-
+  
 	public Person getPerson(Person p) {
 		em.merge(p);
 		return p;
 	}
 
 	public List<Car> getPersonCars(Person p) {
-
 		tx.begin();
 		em.merge(p);
 		List<Car> car = p.getCars();
